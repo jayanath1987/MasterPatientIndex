@@ -1,0 +1,51 @@
+server:
+  port: 8081
+security:
+  oauth2:
+    resource:
+      user-info-uri: http://localhost:8080/oauth/api/account/user
+    client:
+      client-id: clientapp
+      client-secret: 123456
+spring:
+  jpa:
+    hibernate:
+      ddl-auto: create-drop
+    properties:
+      hibernate.jdbc.batch_size: 20
+      hibernate.cache.use_query_cache: false
+      hibernate.cache.use_second_level_cache: false
+      hibernate.cache.use_structured_entries: false
+      hibernate.cache.use_minimal_puts: false
+      hibernate.search.default.directory_provider: filesystem
+      hibernate.search.default.indexBase: target/lucenefiles
+      hibernate.search.lucene_version: LUCENE_CURRENT
+      hibernate.search.model_mapping: ca.uhn.fhir.jpa.search.LuceneSearchMappingFactory
+spring.datasource:
+    driverClassName: com.mysql.jdbc.Driver
+    url: jdbc:mysql://localhost:3306/mpi_01
+hapi:
+  fhir:
+    version: dstu3
+    server:
+      path: /fhir/*
+    rest:
+      server-name: hapi-fhir-spring-boot-sample-server-jersey
+      server-version: 1.0.0
+      implementation-description: Spring Boot Jersey Server Sample
+      default-response-encoding: json
+      default-request-encoding: json
+      e-tag-support: enabled
+      default-pretty-print: true
+    validation:
+      enabled: true
+      request-only: true
+    jpa:
+      scheduling-disabled: true
+      subscription-enabled: false
+management:
+  security:
+    enabled: true
+logging:
+  level:
+    ca.uhn.fhir.jaxrs: debug
